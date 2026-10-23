@@ -1,0 +1,63 @@
+{
+  "name": "hospital-management-backend",
+  "version": "1.0.0",
+  "description": "Backend for Hospital Management System",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "free-port": "powershell -Command \"$processId = (Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue).OwningProcess; if ($processId) { Stop-Process -Id $processId -Force -ErrorAction SilentlyContinue; Write-Host 'Process using port 3000 terminated.' } else { Write-Host 'No process using port 3000.' }\"",
+    "dev": "npm run free-port && echo Puerto libre, iniciando backend... && ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev:ssh": "npm run free-port && echo Puerto libre, iniciando backend con túnel SSH... && ts-node-dev --respawn --transpile-only src/index.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "export:local": "cross-env NODE_ENV_DB_PATH=.env.local node scripts/migrate-data.js export",
+    "import:cloud": "cross-env NODE_ENV_DB_PATH=.env.cloud node scripts/migrate-data.js import",
+    "studio:cloud": "cross-env NODE_ENV_DB_PATH=.env.cloud npx prisma studio",
+    "seed:cloud": "cross-env DATABASE_URL=\"mysql://JUANMENR74:Confir7450@127.0.0.1:3306/SGM\" npx prisma db seed",
+    "seed:local": "cross-env NODE_ENV_DB_PATH=.env.local npx prisma db seed",
+    "dev:local-direct": "npm run free-port && cross-env NODE_ENV_DB_PATH=.env.local ts-node-dev --respawn --transpile-only src/index.ts",
+    "start:local": "npm run free-port && echo Puerto libre, iniciando backend... && node scripts/copy-env.js local && npm run start",
+    "start:cloud": "npm run free-port && echo Puerto libre, iniciando backend... && node scripts/copy-env.js cloud && npm run start",
+    "dev:local": "node scripts/copy-env.js local && npm run dev",
+    "dev:cloud": "node scripts/copy-env.js cloud && npm run dev"
+  },
+  "keywords": [
+    "hospital",
+    "management",
+    "express",
+    "prisma",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "@types/cookie-parser": "^1.4.9",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "qrcode": "^1.5.3",
+    "tunnel-ssh": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.18",
+    "@types/express": "^4.17.22",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^20.17.48",
+    "@types/qrcode": "^1.5.1",
+    "cross-env": "^7.0.3",
+    "prisma": "^5.22.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  }
+}

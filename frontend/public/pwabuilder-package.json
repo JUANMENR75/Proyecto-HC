@@ -1,0 +1,87 @@
+{
+  "packageId": "SistemaGestionMedicamentos",
+  "name": "Sistema de Gestión de Medicamentos",
+  "version": "1.0.0",
+  "appId": "com.sistemagestionmedicamentos.app",
+  "description": "Control de inventario y entregas de medicamentos",
+  "displayName": "Sistema de Gestión de Medicamentos",
+  "author": {
+    "name": "Hospital Civil",
+    "email": "contact@example.com"
+  },
+  "windows": {
+    "appUserModelId": "SistemaGestionMedicamentos",
+    "backgroundColor": "#FFFFFF",
+    "startMenuTile": {
+      "squareSmall": "SGM_ICON.png",
+      "square": "SGM_ICON.png",
+      "wide": "SGM.png",
+      "squareLarge": "SGM.png"
+    },
+    "splashScreen": {
+      "imageFile": "splash-windows.png",
+      "backgroundColor": "#FFFFFF",
+      "onlyShowSplashScreen": true,
+      "splashScreenMinDuration": 3
+    },
+    "titleBar": {
+      "backgroundColor": "#FFFFFF",
+      "foregroundColor": "#000000",
+      "buttonBackgroundColor": "#FFFFFF",
+      "buttonForegroundColor": "#000000",
+      "buttonHoverBackgroundColor": "#EEEEEE",
+      "buttonHoverForegroundColor": "#000000",
+      "buttonPressedBackgroundColor": "#DDDDDD",
+      "buttonPressedForegroundColor": "#000000",
+      "inactiveBackgroundColor": "#EEEEEE",
+      "inactiveForegroundColor": "#999999"
+    },
+    "windowsFeatures": [
+      "notifications",
+      "location",
+      "microphone",
+      "camera"
+    ],
+    "appProtocol": "sgm",
+    "allowSigning": true,
+    "publisher": "CN=Hospital Civil",
+    "certificateSubjectName": "Hospital Civil",
+    "displayName": "Sistema de Gestión de Medicamentos",
+    "publisherDisplayName": "Hospital Civil",
+    "identityName": "HospitalCivil.SistemaGestionMedicamentos",
+    "languages": ["es-ES", "es-MX"],
+    "capabilities": [
+      "internetClient",
+      "privateNetworkClientServer",
+      "removableStorage"
+    ],
+    "minWindowsVersion": "10.0.17763.0"
+  },
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "url": "/dashboard",
+      "icon": "SGM_ICON.png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "SGM.png",
+      "type": "image/png",
+      "sizes": "2202x2202",
+      "label": "Sistema de Gestión de Medicamentos"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "iarc_rating_id": "",
+  "categories": ["healthcare", "productivity"],
+  "buildOptions": {
+    "appxManifest": {
+      "resourceLanguages": ["es-ES", "es-MX"]
+    },
+    "generateMsix": true,
+    "generateAppx": true,
+    "generateExe": true
+  }
+}

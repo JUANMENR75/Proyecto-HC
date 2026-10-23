@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sistema Integral de Gestión Hospitalaria" />
+    <title>SGM</title>
+    <meta name="theme-color" content="#FFFFFF" />
+
+    <!-- PWA para Windows -->
+    <meta name="msapplication-TileImage" content="/SGM_ICON.png" />
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-navbutton-color" content="#FFFFFF" />
+    <meta name="msapplication-starturl" content="/" />
+    <meta name="msapplication-tooltip" content="Sistema de Gestión de Medicamentos" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="msapplication-config" content="/pwabuilder-config.json" />
+    <meta name="msapplication-package" content="/pwabuilder-package.json" />
+
+    <!-- PWA para Apple -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Sistema de Gestión de Medicamentos" />
+    <link rel="apple-touch-icon" href="/SGM_ICON.png" />
+    <link rel="apple-touch-startup-image" href="/SGM.png" />
+    <!-- Service Workers de PWA -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+// Configuración específica de Windows 10/11 para PWABuilder
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open('windows-static-v1').then((cache) => {
+      return cache.addAll([
+        '/',
+        '/index.html',
+        '/SGM_ICON.png',
+        '/SGM.png'
+      ]);
+    })
+  );
+});
+
+// Gestionar las notificaciones de Windows
+self.addEventListener('push', (event) => {
+  if (event.data) {
+    const data = event.data.json();
+    
+    const options = {
+      body: data.body,
+      icon: '/SGM_ICON.png',
+      badge: '/SGM_ICON.png',
+      data: {
+        url: data.url || '/'
+      },
+      actions: data.actions || []
+    };
+    
+    event.waitUntil(
+      self.registration.showNotification(data.title, options)
+    );
+  }
+});
+
+// Manejar clic en la notificación
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  
+  if (event.action) {
+    // Handle action button clicks
+    console.log(`User clicked notification action: ${event.action}`);
+  } else {
+    // Handle main notification click
+    event.waitUntil(
+      clients.openWindow(event.notification.data.url)
+    );
+  }
+});
+
+// Manejo de protocolos específico de Windows
+self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+  
+  // Manejar URLs de ms-protocol para la integración en Windows
+  if (url.protocol === 'ms-protocol:') {
+    event.respondWith(
+      fetch(event.request).catch(() => {
+        return new Response('Windows Protocol Handler', {
+          headers: { 'Content-Type': 'text/plain' }
+        });
+      })
+    );
+    return;
+  }
+  
+  // Comportamiento de fetch predeterminado
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
+  );
+});

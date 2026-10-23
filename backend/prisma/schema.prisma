@@ -1,0 +1,110 @@
+// schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  nombre        String
+  email         String         @unique
+  passwordHash  String
+  role          String         @default("ENCARGADO")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  personal      Personal?
+  refreshTokens RefreshToken[]
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  isValid   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Personal {
+  id        Int       @id @default(autoincrement())
+  nombre    String
+  puesto    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  entregas  Entrega[]
+  userId    Int       @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Medicamento {
+  id              Int              @id @default(autoincrement())
+  clave           String           @unique
+  nombre          String
+  cantidadActual  Int              @default(0)
+  fechaCaducidad  DateTime
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  entregaDetalles EntregaDetalle[]
+}
+
+model Paciente {
+  id        Int       @id @default(autoincrement())
+  nombre    String
+  curp      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  entregas  Entrega[]
+}
+
+model Doctor {
+  id           Int       @id @default(autoincrement())
+  nombre       String
+  especialidad String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  entregas     Entrega[]
+}
+
+model Entrega {
+  id              Int              @id @default(autoincrement())
+  clave           String           @unique
+  general         Int              @default(0)
+  dental          Int              @default(0)
+  vales           Int              @default(0)
+  fecha           DateTime         @default(now())
+  paciente        Paciente         @relation(fields: [pacienteId], references: [id])
+  pacienteId      Int
+  doctor          Doctor           @relation(fields: [doctorId], references: [id])
+  doctorId        Int
+  personal        Personal         @relation(fields: [personalId], references: [id])
+  personalId      Int
+  entregaDetalles EntregaDetalle[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model EntregaDetalle {
+  id            Int         @id @default(autoincrement())
+  entrega       Entrega     @relation(fields: [entregaId], references: [id])
+  entregaId     Int
+  medicamento   Medicamento @relation(fields: [medicamentoId], references: [id])
+  medicamentoId Int
+  cantidad      Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Donacion {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  cantidad  Int
+  fecha     DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
